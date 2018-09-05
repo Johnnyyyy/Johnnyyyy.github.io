@@ -76,7 +76,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/05/JS基础/">JS基础</a>
+      <a class="article-title" href="/2018/09/05/JS基础/">css基础</a>
     </h1>
   
 
@@ -84,15 +84,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>###解释性语言： js  php python 依赖浏览器 解释一行执行一行</p>
-<p>编译性 c  c++</p>
-<p>java  javac编译  —&gt;.class  —jvm解释—&gt;解释执行</p>
-<p>js引入  页嵌         外部引入</p>
+        <p>css<br>属性选择器可以根据元素的属性及属性值来选择元素          分组选择器节省代码<br>CSS 伪类用于向某些选择器添加特殊的效果<br>选择器权重：<br>important ！== infinity<br>内嵌样式/行内样式 == 1000<br>id                           ==100<br>class|伪类|属性     ==10<br>标签|伪元素(:before :after :first-letter :first-line        )               ==1<br>继承         &gt;0<br>通配符            ==0</p>
+<p>css选择器：<br>*通配符<br>div 标签<br>id<br>class<br>[]属性<br>::伪类<br>:伪元素</p>
+<p>font-style: italic<br>font-family:  arial</p>
+<p>border画三角形        </p>
+<p>并列选择器</p>
+<p>1em =1* font-size</p>
+<p>text-decoration</p>
+<p>通配符：初始化设置<br>*{<br>            padding: 0;<br>            margin: 0;<br>            list-style: none;<br>}</p>
+<p>先定义样式，自定义标签</p>
+<p>标签类型<br>1.行级元素（dispaly：inline）<br>                                  1.内容决定区域大小<br>                                  2.不可以通过css改变宽高<br>           a strong  em i b</p>
+<p>2.块级元素（dispaly：block）<br>                                   1.独占一行<br>                                   2.可以改变宽高<br>           div p ul ol li table form address </p>
+<p>3.行级块元素（dispaly：inline-block）<br>                     1.内容决定宽高<br>                      2.可以改变宽高<br>                    input   img<br>显示均可设置<br>所有带有inline属性的标签都会体现文字特性<br>img会被文字分隔符分割</p>
+<p>一、盒模型<br>margin（盒外边距）上 右  下 左 （margin塌陷：             ；margin合并：；<br>border（边框）<br>padding（内边距）<br>content（内容）</p>
+<p>二、层模型<br>绝对定位position：absolute；left：；top：；<br>feature;      1 )脱离原来位置进行定位<br>                  2)先找最近的有定位的父级，没有就参考浏览器边框进行定位(文档）。<br>相对定位position:  relative；left：；top：；<br>feature;      1 )保留原来位置去另一层定位<br>                    2)相对自己原来的位置。<br>固定定位position：fixed<br>feature;      1 )相对于可视区窗口定位</p>
+<p>画五环</p>
+<p>两栏布局：先写固定的</p>
+<p>margin 塌陷：<br>垂直方向父子嵌套的margin取最大值，没法相对父级定位，</p>
+<p>，解决方法：<br>X 1.土法子 添加顶 border-top：1px solid red；</p>
+<p> \/2.bfc 触发一个盒子的bfc：position：absolute；display：inline-block；float：left/right；overflow：hidden；<br>针对需求选择，防止出现新的问题</p>
+<p>margin合并                ：不解决；<br>垂直方向兄弟节点之间合并区域</p>
+<p>三、浮动模型</p>
+<p>float：left；//123<br>                       //456<br>                       //789<br>float：right//321<br>                       //654<br>                       //987<br>站队的边界是父级的边界<br>浮动元素也分层<br>1.浮动元素产生了浮动流，只有快级元素看不到他们，产生了bfc的元素和文本累属性的元素以及文本都能看到浮动元素<br>（浮动就是把元素变成了文本（inline））<br>2.块级父级包不住浮动的子级的解决方法<br>只需要逻辑上设置一个元素来清除浮动（宽高可以没有）<br>clear：both；<br>就可以撑开父级<br>::after{<br>        display:block;<br>        clear:both;<br>        content:”’;<br>}</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/05/JS基础/" data-id="cjloy1yq80000rwjcju85qz09" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/05/JS基础/" data-id="cjloyxj8h0000xxjcwip1n4f2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -137,7 +155,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/05/hello-world/" data-id="cjloy1yqg0001rwjcmxsa2yw5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/05/hello-world/" data-id="cjloyxj8o0001xxjcossfly5u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -178,7 +196,7 @@
       <ul>
         
           <li>
-            <a href="/2018/09/05/JS基础/">JS基础</a>
+            <a href="/2018/09/05/JS基础/">css基础</a>
           </li>
         
           <li>
