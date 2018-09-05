@@ -1,0 +1,124 @@
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>正则表达式 | John康的部落格</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">正则表达式</h1><a id="logo" href="/.">John康的部落格</a><p class="description">自己学习的一些心得笔记</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">正则表达式</h1><div class="post-meta">Sep 5, 2018</div><div class="post-content"><p>正则表达式          :         匹配最佳字符或有特殊搭配原则字符的最佳原则</p>
+<pre><code> “\”转意字符
+
+“\n”多行字符串字符串换行符
+</code></pre><p>   例子  var str =“\<br>                    </p><p>p</p>\<br>                     <span>span&gt;”<p></p>
+<p>例子：                     var str = ‘abcabc’<br>                                var reg = /a/         //：只找a              console.log(reg.test(str));<br>        全局匹配g          var reg = /a/g       // :g全局找              cosole.log(str.match(reg));</p>
+<pre><code> 忽略大小写i          var reg = /ab/gi    //ab连续，i忽略大小写ignore    console.log(str.match(reg));
+                           等于
+    多行匹配m        var str=‘abc\nabc’
+                              var reg=/[ab]/gm
+创建方法           var reg = new RegExp(‘ab’,’gi’)
+                         或者
+                        var reg1= new RegExp(reg)新创建一个reg
+                       var reg2 = RegExp(reg)     引用之前的reg
+                       比如var reg = /n/gi；
+                        var reg1 = new RegExp(‘\\n’,’’)转义字符带来的问题，所以就可以用上面这条写法
+
+
+   方括号        查找方括号之间的任意字符，单个字符挨个找
+                       var reg = /[ab]/g    找单个的a或b
+                       var reg = /[0-9]/g   找0-9之间的所有数字
+                       var reg = /[A-z0-9]/      找所有的大小写英文字母阿拉伯数字
+
+  取反^(必须在方括号內）           取反var reg = /[^ab]/g   除了ab其他的都匹配
+
+
+     小括号        查找括号内指定的选项 
+                         var reg = /(red|dlue)/g
+                         var str = ‘redlue’;
+                         str.match(reg); //只会得到red，因为匹配了一个就从下一个字符开始匹配
+</code></pre><p>元字符：<br>                点 .                查找每个单个字符除了换行符和结束符<br>                                 var reg = /./g</p>
+<pre><code> \w               找单词字符数字字母下划线，中划线不算,相当于[0-9A-z_]
+                      var reg = /\w/g
+ \W               除了\w能匹配的, 如%.-…
+                    var reg=/[\w\W]/     所有的字符都能取，总集合
+                   例子：str=“1000000000”;
+
+ \d              匹配数字
+                   reg = /\d\/
+\D             除了数字
+
+ \s             匹配空字符
+  \S            除了\s匹配的
+
+  \b        匹配单词边界，忽略中文
+                    var str=“13245”;
+                    var reg = /\b1/g        //—&gt;   ‘1’     ：可以匹配规定开头的或者规定结尾的字符串
+  \B      匹配非单词边界
+
+  \0       查找NUL字符
+
+  \n        查找换行符
+
+  \f         查找换页符
+
+  \r         查找回车符
+
+  \t          查找制表符
+
+  \v        查找垂直制表符
+
+  \xxx     查找以八进制数xxx规定的字符
+
+ \xdd     查找以十六进制数dd规定的字符
+</code></pre><p>量词：      n+     匹配一个至多个，符合贪心法则<br>                          str = ‘aaaddaafa’<br>                          var reg=/a+/<br>                           str.match(reg));    //—&gt;“aaa”,”aa”,”a”<br>                n<em>     匹配0至多个<br>                           str = ‘bab’<br>                          var reg=/a</em>/<br>                           str.match(reg));    //—&gt;“”,”a”, “”，“”（b之后的空）<br>                n?     0个或者一个<br>                           str = ‘aba’<br>                          var reg=/a?/<br>                           str.match(reg));    //—&gt;”a”, “”，“a”, “”</p>
+<pre><code>n{X}     匹配X个n字符
+              str = ‘aaaaa’
+             var reg=/a{3}/
+              str.match(reg));    //—&gt;”aaa”
+                var reg=/a{3,5}/
+              str.match(reg));    //—&gt;”aaaaa”
+             var reg=/a{3,}/
+             str.match(reg));    //—&gt;”aaaaa”
+              str = ‘aaaaaa’
+            var reg=/a{2,5}?/  非贪心匹配
+              str.match(reg));    //—&gt;”aa”,”aa”,”aa”
+ ^n        匹配以n开头
+ n$       匹配以n结尾的
+              var reg = / ^abc$/g
+              var str=‘abc’        //就只能是a开头c结尾中间只连接一个b，所以只有abc符合
+              var reg = / ^a\w*c$/g   //能匹配a开头c结尾的所有字符
+</code></pre><p>   断言/预查        var str = ‘abc’;<br>                           var reg = /a( ?=bc)/g;           //后面必须是bc的a<br>                          var reg = /a( ?！bc)/g;            //后面没有bc的a</p>
+<pre><code>   reg方法，判断时候有后缀
+                reg.global不用加括号g
+                reg.ignoreCase           i
+                reg.multiLine                m
+                 reg.compile               返回正则表达式里的东西
+
+              / (aaa)/         括号里的子表达式
+               match方法不写g 就多出来子表达式，input，index项
+              exec方法 匹配后把lastindex属性变成匹配的下一位
+              reg.exec(str)
+               reg.exec(str)
+
+             还可以修改lastIndex
+              reg.lastIndex=3
+
+             split把字符串变成字符串数组
+
+
+            var str = ‘abba’;
+            var reg = /(\w)(\w)\2\1/g;     \1指的是第一个子表达式匹配出来的字符，\2指的是第二个子表达式匹配出来的字符
+             var str = “aaaabbbb”
+            var reg = /(\w)\1\1\1(\w)\2\2\2/
+            var str=“abb”
+            var reg=/(\w)(\w)\2/
+            var reg= /(?:\w)(\w)\1/ 忽略第一个子表达式，第二个子表达式变成第一个，和上式子结果一样
+
+
+* replace  (字符串方法，可以放正则表达式）
+                  str=‘aaaabbbb’;
+                  reg =/(\w{4)(\w{4})/g
+                  str.replace(reg, ‘$1$1’)         //—&gt;’aaaaaaaa’
+                  str.replace(reg, function($,$1,$2){ 
+                                       return $2+$1;                  //———&gt;’bbbbaaaa’
+                                 })
+
+     toUpperCase    
+</code></pre><p>   例题 小驼峰 ：  var str= ‘my-first-name’;<br>                     reg=/-(\w)/g<br>             str.replace(reg, function($,$1){<br>                                            return $1.toUpperCase();                  //———&gt;’myFirstName’<br>                                      })</p>
+<pre><code>例题 打点：
+   var str = &apos;1000000000000&apos;;
+  var reg = /(?=(\B)(\d{3})+$)/g;
+  console.log(str.replace(reg,&apos;.&apos;));
+</code></pre></span></div><div class="tags"></div><div class="post-nav"><a class="next" href="/2018/09/05/JS基础/">css基础</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/05/正则表达式/">正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/05/JS基础/">css基础</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="https://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a><ul></ul><a href="https://juejin.im/" title="掘金网" target="_blank">掘金网</a><ul></ul><a href="https://www.csdn.net/" title="csdn" target="_blank">csdn</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">John康的部落格.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
