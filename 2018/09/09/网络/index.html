@@ -1,0 +1,67 @@
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>网络 | John康的部落格</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">网络</h1><a id="logo" href="/.">John康的部落格</a><p class="description">自己学习的一些心得笔记</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">网络</h1><div class="post-meta">Sep 9, 2018</div><div class="post-content"><p>网络   ajax    同源策略    cookie  jsonp 跨域</p>
+<p>method=‘POST’||’GET’          （form）<br>action：adress提交数据但form表单会刷新整个页面<br>enctype:规定在发送表单数据之前如何对其进行编码application/x-www-form-urlencoded（在发送前编码所有字符（默认）、<br>               multipart/form-data（&lt; input type=‘file’&gt;）(不对字符编码。在使用包含文件上传控件的表单时，必须使用该值)</p>
+<p><em>//1.get传送数据的时候主要拼接在URL后边username=&amp;age=；2.url长度有限所有偏向于获取数据；3.会把信息显露出来<br>xml.open(‘GET’, ‘./post.php?username=Jhonny&amp;age=20’,true);<br>xml.send();
+</em>//1.post放的位置不一样；2.也有长度限制主要考虑服务器的安全；3.post不会把信息显示出来，但在请求报文里也可以看到</p>
+<p>***get和post的区别：常规理解<br>       1.get使用url或者cookie传参，而post放在body中<br>       2.post可以传更多数据<br>       3.post比get安全</p>
+<p>var str = ‘username=Jhonny&amp;age=20’;<br>xml.open(‘POST’, ‘./post.php’,true);<br>xml.send(str);</p>
+<p>&lt; form  action=””  method=‘POST’||’GET’  &gt;//get主要用于获取数据post主要用于传递数据<br>       &lt; input type=”text” name=”username”&gt;<br>        &lt; input type=”text” name=”age”&gt;<br>        &lt; input type=”submit”&gt;<br>    &lt; /form&gt;<br>file:///Users/apple/Desktop/ajax.html?username=&amp;age=<br>后台匹配这个地址中的信息</p>
+<p>ajax:一种不用刷新整个页面便可以与服务器通讯的办法<br>web传统模型，客户端向服务器发送一个请求，服务器返回整个页面，如此反复<br>Ajax模型，数据在客户端与服务器之间独立传输。服务器不再返回整个页面<br>                 计算机语言中的同步即人类语言中的异步，单线程，先后排序<br>                 计算机语言中的异步即人类语言中的同步，多线程，同时进行</p>
+<p>ajax步骤（跟订外卖类似）：「1、手机 ；2、软件平台；3、注册账号，选择商家，选择商品，选择地址，备注；4、下单； 5、看商家是否接单；6、等电话  检验商品 ；7、处理」<br>ajax：「1、浏览器；<br>             2、ajax对象；</p>
+<pre><code>    if(window.XMLHttpRequest){
+          xml = new XMLHttpRequest();
+    }else{
+          xml = new ActiveXObject(&apos;Microsoft.XMLHTTP&apos;);
+    }
+
+3、open（method，url，true（同步或异步））；
+          xml.open(method, url+&apos;?&apos;+str,true);
+        —————————————————
+          xml.open(&apos;POST&apos;, url,true);
+
+           xml.setRequestHeader(&apos;content-type&apos;,&apos;application/x-www-form-urlencoded’)//信息传输方式
+
+4、send（）；
+            xml.send(str);
+
+5、onreadystatechange(0,1,2,3(success))；
+
+                 xml.onreadystatechange= function(){
+                       if(xml.readyState == 4){
+                                   if(xml.status == 200){
+                                      dealdata(xml.responseText);
+                            }
+                      }
+                 }
+
+ 6、200（拿到数据，取回成功·）404（请求资源不存在，客户端问题）502（服务器错误）
+7、处理
+</code></pre><p>onreadystatechange|状态改变的事件触发器<br>readyState                |对象状态（integer），状态值：0=未初始化，未调用send（）方法；1=读取中，已调用send（），正在发送请求；2=已读取，send方法执行完成，接收到全部响应内容；3=交互中，正在解析响应内容；4=完成，响应内容解析完成<br>resposeText              |获取字符串形式的响应数据<br>responseXML           |获得xml形式的响应数据<br>status                       |服务器返回状态码，如：404=“文件未找到”  304=“资源未被修改”<br>statusText                |服务器返回的状态文本信息</p>
+<p>同源策略（same-origin Policy)。所谓同源是指，域名，协议，端口相同。不同源的客户端脚本在没有明确授权的情况下，不能读写对方的资源。</p>
+<p>简单来说，浏览器不允许包含在腾讯页面的脚本访问阿里巴巴页面的数据资源，会受到同源策略的限制<br>协议；http/https<br>域名：<a href="http://www.XXX.com" target="_blank" rel="noopener">www.XXX.com</a><br>端口：http:80/https:443 (默认)</p>
+<p>例：<br><a href="https://zhidao.baidu.com/" target="_blank" rel="noopener">https://zhidao.baidu.com/</a><br>协议：https<br>域名：zhidao.baidu.com<br>端口：443；</p>
+<p>服务器ip地址是一串数字,会随地点、路由变化，要把域名解析成服务器地址</p>
+<p>解析域名：从后往前解析</p>
+<p>.com 顶级域名<br>baidu.com 属于一级域名<br>zhidao.baidu.com 属于二级域名<br>www 是一级域名前缀 表示万维网维护的<br><a href="http://www.baidu.com属于特殊二级域名" target="_blank" rel="noopener">www.baidu.com属于特殊二级域名</a><br>zhidao.baidu.com 属于 百度自己维护的网络地址</p>
+<p>www页面ftp文件email邮件以前留下来的<br>现在可以不用www</p>
+<p>com org net属于顶级域名，是在全世界解析的，cn、hk是在一个地区解析的<br>cn中国<br>.com商业机构<br>.net从事互联网服务的机构<br>.org非营利性组织<br>.com.cn国内商业机构</p>
+<p>dns先根据顶级域名判断网络范围再根据域名查找主机IP地址<br>前缀理论上就是占位用</p>
+<p>ip地址比作一间房子，端口就是出入的门，一个IP地址可有很多门</p>
+<p>Ajax受到同源策略的限制</p>
+<p>状态码<br>1XX  ：信息<br>2XX  ：成功<br>3XX  ：重定向：301/302临时/永久 换了ip地址重新定向了一下地址 304:资源未被修改过<br>4XX   ：客户端问题  404请求内容不存在<br>5XX ： 服务器问题：500服务器暂时不可用  503服务器内部错误</p>
+<p>浏览器缓存机制（http）<br>Date：服务器响应内容日期<br>Cache-control：内容缓存时间<br>no-cache：不被缓存的，只不过每次在向客户端提供响应数据时，缓存都要向服务器评估缓存响应的有效性<br>no-store：用于防止重要的信息被无意的发布。在请求消息中发送将使得请求和响应消息都不使用缓存。根据缓存超市<br>max -age：指示客户机可以接收生存期不大于指定时间（以秒为单位）的响应。<br>min-fresh：指示客户机可以接收响应时间小于当前时间加上指定时间的响应<br>max-state：指示客户机可以接收超出超时期间的响应消息。如果指定max-state消息的值，那么客户机可以接收超出超时期指定值之内的响应消息<br>Expires：内容保质期，表示存在时间，允许客户端在这个时间之前不去检查（发请求），等同与max-age的效果。但如果同时存在，责备cache-cotrol的max-age覆盖</p>
+<pre><code>网站如何统计用户从何点击而来
+</code></pre><p>Referer：如果从浏览器地址栏里直接输入地址，请求头没有referer</p>
+<p>cookie是由服务器生成，发送给user-Agent（一般是浏览器），（服务器告诉浏览器设置一下cookie），浏览器会将cookie以key/value形式保存在本地某个目录的文件夹内，下次请求同一网站就发送该cookie给服务器（前提是浏览器设置为启用cookie）</p>
+<p>cookie就是一个小型文件（浏览器对cookie的内存大小是有限制的———用来记录一些信息）</p>
+<p>存的时候一个个存；</p>
+<p>var oDate = new Date();<br>oDate.setDate(oDate.getDate()+3)<br>document.cookie = ‘name=aimee;expires=‘+oDate;</p>
+<p>删除只需要把时间改成之前</p>
+<p>自己写函数接口<br>var manageCookie  = {<br>            setCookie:function(name,value,data){<br>                var oDate = new Date();<br>                oDate.setDate(oDate.getDate() + data)<br>                document.cookie = name + ‘=’ +value + ‘;expires=’+data;<br>                return this;<br>            },<br>            removeCookie:function(name){<br>                this.setCookie(name,’’,-1);<br>            },<br>            getCookie:function(name,callback){<br>                var allCookieStr=document.cookie;<br>                var allCookieArr=allCookieStr.split(“; “);<br>                var value =undefined;<br>                for(var i=0;i&lt; allCookieArr.length;i++){<br>                    var itemArr = allCookieArr[i].split(‘=’);<br>                    if(itemArr[0] == name){<br>                        value=itemArr[1];<br>                        break;<br>                    }<br>                    // console.log(itemArr)<br>                }<br>                callback(value);<br>                return this;<br>            }       </p>
+<pre><code>}
+</code></pre><p>cookie可以解决http的⽆无状态的问题，与服务器器进⾏行行交互，作为http规范存在。它具有极⾼高的简便便 性、可扩展性和可⽤用性，也可以通过加密和SSL技术来提⾼高其安全性。因此推荐使⽤用cookie作为标识 ⽽而不不是身份验证的⼯工具。<br>缺点有 :<br>1 . ⼤大⼩小和数⽬目受限制。浏览器器对⼀一个域cookie的条⽬目数有上限要求，且每个cookie的⼤大⼩小不不得超过 4kb。<br>2 . 存在安全性问题，易易被⼈人拦截。<br>3 . 需要指定域，不不可以跨域。<br>4 . 浪费带宽，因为我每次请求⼀一个新的⻚页⾯面，cookie都会被⾃自动发送过去。<br>5 . 有的移动端浏览器器不不⽀支持cookie或浏览器器禁⽤用cookie。<br>6 . 有些状态不不可能保存在客户端。例例如，为了了防⽌止重复提交表单，我们需要在服务器器端保存⼀一个计数器器。如果我们把这个计数器器保存在客户端，那么它起不不到任何作⽤用。</p>
+<p>JSONP<br>             回顾ajax跨域</p>
+<p>  解决跨域问题的几种办法<br>            1.flash（不做讨论）<br>            2.服务器代理中转<br>             浏览器到本地服务器，本地服务器到外服务器没有经过浏览器所以没有同源策略限制<br>            3.JSONP<br>                 (1)script标签上引入js文件不受跨域限制<br>                （2）于是我们把数据放到服务器上，并且数据为json格式<br>                 （3）因为我们无法监控通过script得src属性是否把数据获取完成，所以我们需要做一个处理<br>                   （4) 实现定义好处理跨域获取来的的数据的函数，如funtion doJSON(data){}<br>                      (5)用src获取数据的时候添加一个参数cb=doJSON，服务端会根据参数cb的值返回对应的内容<br>            4.document.domain(针对基础域名相同的情况）<br>                 bj.58com             document.domain = ’58.com’</p>
+<pre><code>     tj.58.com             document.domain =’58.com’
+src不受同源策略限制可以用百度的js文件
+</code></pre><p>oInput.onkeyup = function(){<br>    oUl.innerHTML=null;<br>    var value=oInput.value;<br>    var oScript = document.createElement(‘script’);<br>    oScript.src=”<a href="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=&quot;+value+&quot;&amp;cb=aa&quot;" target="_blank" rel="noopener">https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=&quot;+value+&quot;&amp;cb=aa&quot;</a>;<br>    document.body.appendChild(oScript);<br>}<br>function aa(data){<br>    var val = data.s;<br>    val.forEach(function(ele,index){<br>        var oLi = document.createElement(‘li’);<br>        oLi.innerText = ele;<br>        oUl.appendChild(oLi);<br>    })<br>    console.log(data)<br>}</p>
+</div><div class="tags"></div><div class="post-nav"><a class="next" href="/2018/09/09/性能优化/">性能优化</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/09/网络/">网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/09/性能优化/">性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/09/JS笔记二/">JS笔记二</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/06/JS笔记/">JS笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/05/正则表达式/">正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/05/JS基础/">css基础</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="https://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a><ul></ul><a href="https://juejin.im/" title="掘金网" target="_blank">掘金网</a><ul></ul><a href="https://www.csdn.net/" title="csdn" target="_blank">csdn</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">John康的部落格.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
