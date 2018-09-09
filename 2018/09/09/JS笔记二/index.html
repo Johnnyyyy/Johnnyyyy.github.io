@@ -1,4 +1,44 @@
-<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>JS笔记二 | John康的部落格</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">JS笔记二</h1><a id="logo" href="/.">John康的部落格</a><p class="description">自己学习的一些心得笔记</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">JS笔记二</h1><div class="post-meta">Sep 9, 2018</div><div class="post-content"><p>11.闭包：两个函数嵌套，把里边的函数保存到了外部全局，必然生成闭包，闭包会保留原作用域链，导致内存泄露<br>例子function test(){<br>         var temp =100;<br>         function a(){<br>          console.log(temp);<br>           }<br>          return a;<br>}<br> b = test（）<br>b();//100<br>//用处，模块化开发不污染变量<br>  function test(){<br>    var food =100;<br>    var obj = {<br>        eatfood:function(){<br>            if(food != 0){<br>                console.log(“eating10$,left”+(food-=10));</p>
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>JS笔记二 | John康的部落格</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">JS笔记二</h1><a id="logo" href="/.">John康的部落格</a><p class="description">自己学习的一些心得笔记</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">JS笔记二</h1><div class="post-meta">Sep 9, 2018</div><div class="post-content"><p>8.函数声明：function test（）{<br>                 ……<br>           }<br>  1.命名函数表达式<br>       var test =function test（）{<br>           }<br>  2.匿名函数表达式<br>        var demo  = function() {<br>                  …<br>          }</p>
+<p>不定参<br>function test（）{<br>      var count=0;<br>   for(var i=0;i&lt; arguments.length;i++){<br>                  count+=arguments[i];<br>       }<br>}</p>
+<p>test(1,2,3,4,5,6,7,8)<br>实参长test.length 形参长</p>
+<p>return  返回值<br>             终止函数</p>
+<p>递归<br>function mul(n) {</p>
+<pre><code>if( n==1 ){
+  return 1;
+ }
+return n*mul(n -1);
+</code></pre><p>}</p>
+<p>function feibo（n){</p>
+<pre><code>if n&gt;2
+return feibo(n-1)+feibo(n-2);
+else if n&gt;0
+return 1;
+else
+return 0;
+</code></pre><p>}</p>
+<p>9.函数作用域<br>       局部-&gt;全局<br>       外边的不能访问里面的，里边的可以访问外边的<br>       只有function有作用域，其他语句都是全局</p>
+<p>数组：一组数据<br>对象：键值对</p>
+<p>10.js运行三部曲</p>
+<p>语法分析</p>
+<p>预编译 ：声明位置无所谓</p>
+<p>解释执行</p>
+<p>//变量声明提升<br>//函数声明整体提升</p>
+<p>test(1);<br>预编译前奏<br>1).imply global暗示全局变量：即任何变量，如果变量未经声明就赋值，此变量就为全局对象所有</p>
+<p>2).一切声明的全局变量，全是window的属性</p>
+<p>预编译：AO={<br>          a=undefined;<br>         b=undefined</p>
+<p>}</p>
+<p>1).创建AO对象（activity object）</p>
+<p>2).形参和变量声明，赋值undefined(跟判断条件无关)</p>
+<p>3).形参实参的值相统一<br>4）.函数声明function a（）{}函数体赋值给变量<br>5）,按行执行函数，覆盖变量</p>
+<p>全局：GO===window<br>1）.创建GO对象<br>2).变量声明赋值undefined<br>3).函数声明函数体赋值<br>4).按行执行</p>
+<p>作用域；<br>每个js函数都是一个对象<br>test.[[scope]]作用域仅供js引擎存取，其存储了其上下文的集合,函数每次执行时，都会把心生成的执行期上下文填充到作用域链的最顶端<br>链式的执行期上下文<br>作用域链<br>function a(){<br>      function b(){<br>           var bb=234;<br>       }<br>       var a=123;<br>     functin c(){</p>
+<pre><code>}
+</code></pre><p>}<br>var global =100;<br>a();</p>
+<p>a.[[scope]] ——&gt;[scope chain]<br>                               [0    |  —— ] ——&gt;  AO[…..]<br>                                [1   |      ]———&gt;GO[…..]<br>b.[[scope]] —-&gt; [scope chain]<br>                               [0    |  —— ] ——&gt; b： AO[…..]<br>                               [1    |      ]———&gt;a：AO[…..]<br>                              [2     |     ]———&gt;GO[…..]</p>
+<p>a defined<br>a.[[scope]] —&gt;GO<br>a doing<br>a.[[scope]] —&gt;0: a AO<br>                    —&gt;1:GO<br>b defined<br>b.[[scope]]   —0:a AO<br>                    —&gt;1:GO</p>
+<p>b doing<br>b.[[scope]]  -—&gt;0: b AO<br>                      —&gt;1:a AO<br>                     —&gt;2:GO<br>c defined<br>c.[[scope]]   —0:a AO<br>                    —&gt;1:GO</p>
+<p>c doing<br>c.[[scope]]  -—&gt;0: c AO<br>                      —&gt;1:a AO<br>                     —&gt;2:GO</p>
+<p>11.闭包：两个函数嵌套，把里边的函数保存到了外部全局，必然生成闭包，闭包会保留原作用域链，导致内存泄露<br>例子function test(){<br>         var temp =100;<br>         function a(){<br>          console.log(temp);<br>           }<br>          return a;<br>}<br> b = test（）<br>b();//100<br>//用处，模块化开发不污染变量<br>  function test(){<br>    var food =100;<br>    var obj = {<br>        eatfood:function(){<br>            if(food != 0){<br>                console.log(“eating10$,left”+(food-=10));</p>
 <pre><code>        }else{
             console.log(&quot;empty&quot;);
         }
