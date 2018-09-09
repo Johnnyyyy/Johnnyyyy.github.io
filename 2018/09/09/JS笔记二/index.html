@@ -1,0 +1,126 @@
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>JS笔记二 | John康的部落格</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">JS笔记二</h1><a id="logo" href="/.">John康的部落格</a><p class="description">自己学习的一些心得笔记</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> Start</i></a><a href="/archives/"><i class="fa fa-archive"> Archiv</i></a><a href="/about/"><i class="fa fa-user"> Über</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">JS笔记二</h1><div class="post-meta">Sep 9, 2018</div><div class="post-content"><p>11.闭包：两个函数嵌套，把里边的函数保存到了外部全局，必然生成闭包，闭包会保留原作用域链，导致内存泄露<br>例子function test(){<br>         var temp =100;<br>         function a(){<br>          console.log(temp);<br>           }<br>          return a;<br>}<br> b = test（）<br>b();//100<br>//用处，模块化开发不污染变量<br>  function test(){<br>    var food =100;<br>    var obj = {<br>        eatfood:function(){<br>            if(food != 0){<br>                console.log(“eating10$,left”+(food-=10));</p>
+<pre><code>        }else{
+            console.log(&quot;empty&quot;);
+        }
+    },
+    pushfood:function(){
+        food +=10;
+        console.log(&quot;add10$,left&quot;+food)
+    }
+}
+return obj;
+</code></pre><p>}<br>var person = test();</p>
+<p>person. eatfood();</p>
+<p>function test(){<br>    var arr=[];<br>    for(var i=0;i&lt;10;i++){<br>        arr[i] = function(){<br>          console.log(i)<br>        }<br>    }<br>    return arr;<br>}</p>
+<p>var temp =test();<br>for(var j =0 ;j&lt;10;j++)<br>  temp<a href="">j</a>;                 //打印十个10</p>
+<p>全局：<br>var num=100;<br>function test(){<br>    console.log(num);<br>}<br>num=200;<br>test();//200;<br>解决上面十个10的方法：</p>
+<pre><code>（     立即执行函数：
+       (function () {
+            console.log(“a”);
+        }())
+       定义完函数后立即执行，执行完直接销毁
+     var num = (function (a,b0{ return a+b;}(1,2))
+     只有表达式才能被执行；
+      var demo =function () {
+            console.log();
+       }();加了立即执行函数就失去了声明功能，变成一次性
+       function test(){
+          console.log();
+       }();不是表达式，加个任意运算符号符号就能执行
+ ）
+</code></pre><p>用立即执行解决：<br>function test(){<br>    var arr=[];<br>    for(var i=0;i&lt;10;i++){<br>       (function(index){ // 每次i传给j<br>           arr[index] = function(){//每个该函数的作用域链是每一次的立即执行函数的AO，共十个<br>               console.log(index);//该变量j每次都可以接收新的实参<br>           }<br>       }(i))     //i从0到9，共十个立即执行函数，就有十个作用域</p>
+<pre><code>}
+return arr;
+</code></pre><p>}</p>
+<p>var temp =test();<br>for(var k=0;k&lt;10;k++){<br>    temp<a href="">k</a>;<br>}<br>(   ,    )逗号运算符，把逗号后的算式计算结果返回</p>
+<p>var f = (<br>    ( function() {</p>
+<pre><code>return “1”;
+</code></pre><p>}()),<br>   ( function(){<br>     return 1;<br>  }()))<br>typeof(f);</p>
+<p>12.Object 对象<br>方法与属性<br>构造函数：<br>function Student(){<br>       。。。<br>};<br>var s=new Student();</p>
+<p>致力于返回一个引用值，如果返回一个原始值就忽略</p>
+<p>包装类：String Number Boolean</p>
+<p>var abc = new String（）<br>原始值没有属性<br>var str = “abcd”<br>str.abc=‘asdf’<br>//new String（str),        String. abc = ‘asdf’执行完删除<br>有一些原始值可以通过包装类进行一些计算，但【不会改原始值的值】，是包装类的属性<br>除了undefined 和 null，调用不了任何方法</p>
+<p>给原始值赋任何属性都白费！</p>
+<p>13.原型  prototype    .<strong><strong>proto</strong></strong>：XX.prototype    定义：原型是function对象的一个属性，它定义了构造函数制造出的对象的公共祖先。通过该构造函数产生的对象，可以继承该原型的属性和方法。原型也是对象。<br>   constructor 构造者，查构造函数<br>子辈都是指向一个原型</p>
+<p>《〈注意引用值地址〉》   改过的父级属性子辈都变了<br>子类的属性一定覆盖父类，子类没有的才从prototype中找</p>
+<p> var list = {<br>    init:function(){<br>        this.a = 1;<br>        this.getData();<br>    },<br>    getData:function(){<br>        this.renderPage(data);<br>    },<br>    renderPage:function(){<br>        this.bindEvent();<br>    },<br>    bindEvent:function(){<br>        div.onclick = allScreen.bind(this);<br>    },<br>    allScreen:function(){</p>
+<pre><code>}
+</code></pre><p>}</p>
+<p>14.this<br>谁调用方法内部this 就是谁<br>对象的最终都会继承object.prototype</p>
+<p>call方法，aplly方法可以改变this 指向<br>function test(){<br>      console.log(this);<br>}<br>test.call()   //window<br>call(前面传入this是谁没人调用就是window，后面是实参）apply（前面传对象，[以数组形式传实参]）<br>object.prototype.tostring.call（）//可以判断数组和对象的区别</p>
+<p>callee 是 arguments 对象的一个属性。它可以用于引用该函数的函数体内当前正在执行的函数。这在函数的名称是未知时很有用，例如在没有名称的函数表达式 (也称为“匿名函数”)内。<br>function.caller指向调用他的函数，如果是全局就为空</p>
+<p>this的理解<br>var aaa=’222’;<br>var a = {<br>    aaa:’111’,<br>    say:function(){<br>        console.log(this.aaa);<br>    }<br>}<br>var b = {<br>    aaa:’333’,<br>    say: function (func) {<br>        func();<br>    }<br>}<br>a.say()              //111<br>b.say(a.say)         //222<br>b.say() = a.say();   //333<br>b.say();       </p>
+<p>caller看到谁调用它</p>
+<p>15.继承<br>1).传统形式<br>      —过多的继承了没用的属性<br>2).借用构造函数<br>      —不能继承借用构造函数的原型<br>      —每次构造函数都要多走一个函数<br>3).共享原型<br>      —不能随便改动自己的原型,否则都会变，缓冲函数</p>
+<p>function inherit(Father, son) {<br>    var CacheFunc = function(){};</p>
+<pre><code>CacheFunc.prototype = Father.Prototype;
+var oCache = new CacheFunc();
+
+Son.prototype =oCache;
+</code></pre><p>}</p>
+<p>4).圣杯模式，缓冲函数<br>var inherit=(function() {<br>    var CacheFunc = function(){};<br>    return  function(Father, son){<br>             CacheFunc.prototype = Father.Prototype;<br>             var oCache = new CacheFunc();<br>              Son.prototype =oCache;<br>              Son.prototype.constructor = son;<br>     }<br>})();得到继承形成闭包就永生了——&gt;圣杯的意义</p>
+<p>   cache缓冲函数：                        father.prototype<br>                                                              | |<br>                                                              | |share<br>                                                      CachrFunc.prototype<br>                                                                     |<br>                                                                     |<br>                                                                 oCache:实例对象。同时也是子类原型<br>                                                                     | |<br>                                                                     | |<br>                                                                  son.prototype                                                             </p>
+<pre><code>  __proto__是每个对象都有的一个属性，而prototype是函数才会有的属性!!!                                                             
+
+
+共享闭包：多产生几个ao，解决       
+</code></pre><p>16.命名空间：    管理变量，防止污染全局，适用于模块化开发</p>
+<p>创建一个global。js文件，创建一个全局对象app<br>引在其他js文件的上边<br>其他的js都变成app下的属性，变量也变成其属性的属性和方法,就不怕同名<br>app.kf={<br>       ….<br>}</p>
+<p>链式调用<br>demo={<br>    fun1:function(){<br>         },<br>    fun2:function(){<br>         },<br>    fun3:function(){<br>         },<br>     fun4:function(){<br>         },<br>     fun5:function(){<br>         }}<br>demo.fun1().fun2().fun3().fun4().fun5()</p>
+<p>this[‘name’+num]来选择方法或用变量this.变量</p>
+<p>枚举<br>for… in…<br>for (var prop in mrDeng){<br>console.log(mrDeng,mrDeng[prop],mrDeng.hasOwnProperty(prop));<br>}</p>
+<p>hasOwnproperty()判断是自己的属性</p>
+<p>A  instanceof   B 看一下A得原型链上有没有B<br>[] instanceof Array</p>
+<p>17.克隆<br>function clone(target,origin){</p>
+<pre><code>for(var prop in origin){
+        if (origin.hasOwnProperty(prop)) {
+             if (typeof origin[prop] == &apos;object&apos;) {
+                if(typeof origin[prop]==&apos;Array&apos;){
+                    target[prop] = [];
+                }else{
+                    target[prop] = {};
+                }
+                clone(target[prop],origin[prop]);
+             }else{
+                target[prop] = origin[prop]
+             }
+        }
+
+  }  
+</code></pre><p>}<br>// 1.判断是否是原始值<br>// 2.判断是数组还是对象<br>//3.如果是建立相应的数组，反之则直接拷贝原始值<br>//4.建立了引用值则再次递归深度拷贝</p>
+<p>18.数组<br>var arr = [1,2,3 , , 1];稀疏数组【1，2，3，undefined，undefined，1】<br>var arr = new Array(10)//10*undefined  length==10</p>
+<p>改变数组 reverse，sort，push，pop，shift，unshift<br>                 splice<br>不改变原数组<br>              forEach  filter map reduce Right  contact.join-&gt;split.toString</p>
+<p>Array.prototype.myPush = function( …arguments…){<br>   for(var i=0;i &lt; arguments.length;i++){<br>                 this[this.length] = arguments[i];<br>                }<br>               return  this.length;<br>       }<br>Array.prototype.myPop = function( ){<br>                   var last= this[this.length-1];<br>                  this.length—;<br>                 return  last;<br>       }<br>Array.prototype.myUnshift = function( …arguments…){<br>         var newArr=[];<br>   for(var i=0;i &lt; arguments.length;i++){<br>                      newArr[i] = arguments[i];<br>                }<br>   for(var i=0;i&lt; this.length;i++){<br>                 newArr[nweArr.length] = this[i];<br>                 }</p>
+<pre><code>for(var i =0; i&lt; newArr.length;i++){
+            this[i] = newArr[i];
+              }
+</code></pre><p>}<br>Array.prototype.myShift = function( ){<br>                  var firstValue = this[0];<br>                   var newArr  = [];<br>                    for(var i =1;i &lt; this.length;i++){<br>                     nwArr[i-1] = this[i];<br>                    }<br>                    this.length—;<br>                    for(var i = 0;i &lt; this.length;i++){<br>                                 this[i] = newArr[i];<br>                   }<br>                   return firstValue;</p>
+<p>}</p>
+<p>splice(第几位，几个，替换的…）<br>可以精确删除数组</p>
+<p>sort按第一个的ascii码来比较<br>arr1<br>(11) [1, 2, 3, 4, 7, 8, 9, “arr”, 100, 200, 300]<br>arr1.sort()<br>(11) [1, 100, 2, 200, 3, 300, 4, 7, 8, 9, “arr”]<br>并改变数组<br>arr.sort(function(a,b){<br>    for(var i=a;i&lt; b-a;i++){</p>
+<p>}</p>
+<p>forEach<br>arr=[{…},{…},{…}]<br>arr.forEach(function(ele,index){console.log(ele,index)})</p>
+<p>filter 不改变原数组<br>maleStarArr=[<br>    {<br>        name:’zms’,age:42,money:1000000<br>    },<br>    {<br>        name:’xxh’,age:42,money:100000<br>    },<br>    {<br>        name:’zyk’,age:20,money:10000<br>    }   ]<br>    var newArr=maleStarArr.filter(function(ele,index){<br>        if(ele.age&lt;40)<br>            return false;<br>        return true;//true生成新数组，false 不返回新数组</p>
+<pre><code>})
+</code></pre><p>map不改变原数组<br>var newArr = maleStarArr.filter(function(ele,index){<br>        if(ele.age&gt;40)<br>            ele.money=1000000;<br>        else<br>                 ele.money=100<br>        return ele;//true生成新数组，false 不返回新数组</p>
+<pre><code>})
+</code></pre><p>reduce:<br>var  obj={age:0}<br>var Arr=[1,2,3,4,5,6,6]<br> [1, 2, 3, 4, 5, 6, 6]<br>Arr.reduce(function(pram,ele,index){<br>    pram.age+=ele;<br>    return pram;},obj);<br>{age: 27}    </p>
+<p>和split一起把字符串变成对象<br>var cookie={}<br>undefined<br>var cookieStr=’key1=value1;key2=value2;key3=value3’;</p>
+<p>var cookieArr=cookieStr.split(‘;’)</p>
+<p>cookieArr<br>(3) [“key1=value1”, “key2=value2”, “key3=value3”]0: “key1=value1”1: “key2=value2”2: “key3=value3”length: 3__proto__: Array(0)<br>cookieArr.reduce(function(pram,ele,index){</p>
+<pre><code>var keyValueArr=ele.split(&apos;=&apos;);
+
+pram[keyValueArr[0]]=keyValueArr[1];
+
+return pram;},cookie);
+</code></pre><p>slice把类数组变数组<br>var obj ={0:’a’,1:’b’,2:’c’,3:’d’}<br>undefined<br>Array.prototype.slice.call(obj,0)<br>[]<br>obj.length=4<br>4<br>Array.prototype.slice.call(obj,0)<br>(4) [“a”, “b”, “c”, “d”]</p>
+<p>indexOf找不到就返回-1</p>
+<p>类数组<br>var likeArray = {<br>三目运算符 a&gt;b?a=1:b=1</p>
+<p>try catch(e){.}finally{}<br>1.evalerror<br>2.rangeerror<br>3.referenceerror<br>4.syntaxerror<br>5.typeerror<br>6.urlerror</p>
+<p>19.es5严格模式  ‘use strict’  </p>
+<p>this不是对象输出this 的值</p>
+<p>不支持with<br>global.cst={<br>    name:’cst’,age:18}<br>{name: “cst”, age: 18,show:function(){ console.log(this.name}}</p>
+<p>with(global.cst){<br>      //AO -&gt;global.cst<br>    console.log(name,age);<br>     show()<br>}</p>
+<p>20.es6<br>let a=10不可以重复声明<br>const<br>箭头函数<br>let show=(a,b)=&gt;{ return a*b };</p>
+<p>let c=(a,b)=&gt;a*b<br>(es6里详解)</p>
+</div><div class="tags"></div><div class="post-nav"><a class="next" href="/2018/09/06/JS笔记/">JS笔记</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yoursite.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Kategorien</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Letzte</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/09/JS笔记二/">JS笔记二</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/06/JS笔记/">JS笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/05/正则表达式/">正则表达式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/05/JS基础/">css基础</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div><ul></ul><a href="https://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a><ul></ul><a href="https://juejin.im/" title="掘金网" target="_blank">掘金网</a><ul></ul><a href="https://www.csdn.net/" title="csdn" target="_blank">csdn</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">John康的部落格.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css"><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
